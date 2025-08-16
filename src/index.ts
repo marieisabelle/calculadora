@@ -1,10 +1,10 @@
-import { add, sub, mul, div } from "./calc.js";
+import { add, sub, mul, div, raiz } from "./calc.js";
 
 const [, , op, aStr, bStr] = process.argv;
 
 function usage() {
   console.log("Uso: npm start -- <operação> <a> <b>");
-  console.log("Operações: add | sub | mul | div");
+  console.log("Operações: add | sub | mul | div | raiz");
 }
 
 if (!op || aStr === undefined || bStr === undefined) {
@@ -34,8 +34,11 @@ switch (op) {
   case "div":
     console.log(div(a, b));
     break;
+  case "raiz":
+    console.log(raiz(a, b));
+    break;
   default:
-    console.error("Operação inválida. Use: add | sub | mul | div");
+    console.error("Operação inválida. Use: add | sub | mul | div | raiz");
     usage();
     process.exit(1);
 }
