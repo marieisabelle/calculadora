@@ -9,31 +9,37 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./terraform
 
     steps:
-      - name: Checkout do código
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Configurar credenciais AWS
+      - name: Verify terraform directory
+        run: |
+          ls -la
+          pwd
+          test -d terraform || echo "terraform directory not found"
+
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Instalar Terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.7.0
 
-      - name: Inicializar Terraform
+      - name: Initialize Terraform
+        working-directory: terraform
         run: terraform init
 
-      - name: Plano Terraform
+      - name: Terraform Plan
+        working-directory: terraform
         run: terraform plan -out=tfplan
 
-      - name: Aplicar Terraform
+      - name: Apply Terraform
+        working-directory: terraform
         run: terraform apply -auto-approve tfplan
