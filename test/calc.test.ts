@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { add, sub, mul, div } from "../src/calc";
+import { add, sub, mul, div, raiz } from "../src/calc";
 
 describe("calculadora", () => {
   it("soma", () => {
@@ -16,6 +16,9 @@ describe("calculadora", () => {
   });
   it("divisão por zero", () => {
     expect(() => div(10, 0)).toThrow();
+  });
+  it("raiz", () => {
+    expect(raiz(9, 2)).toBe(3);
   });
 });
 
