@@ -3,11 +3,10 @@ provider "aws" {
 }
 
 resource "aws_instance" "app_server" {
-  ami           = "ami-0c02fb55956c7d316" # Amazon Linux 2 (verifique a região)
-  instance_type = var.instance_type
-  key_name      = var.key_name
-
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  
   tags = {
-    Name = "${var.project_name}-ec2"
+    Name = "Calculadora-Instance"
   }
 }
