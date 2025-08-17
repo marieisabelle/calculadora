@@ -1,11 +1,13 @@
 provider "aws" {}
 
-# S3 bucket for Terraform state
-resource "aws_s3_bucket" "terraform_state" {
-  bucket = "calculadora-terraform-state"
+variable "bucket_name" {
+  default = "calculadora-terraform-state"
 }
 
-# Enable versioning
+resource "aws_s3_bucket" "terraform_state" {
+  bucket = var.bucket_name
+}
+
 resource "aws_s3_bucket_versioning" "terraform_state" {
   bucket = aws_s3_bucket.terraform_state.id
   versioning_configuration {
@@ -13,7 +15,6 @@ resource "aws_s3_bucket_versioning" "terraform_state" {
   }
 }
 
-# Enable server-side encryption
 resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" {
   bucket = aws_s3_bucket.terraform_state.id
   rule {
@@ -23,7 +24,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" 
   }
 }
 
-# Block all public access
 resource "aws_s3_bucket_public_access_block" "terraform_state" {
   bucket = aws_s3_bucket.terraform_state.id
 
@@ -33,11 +33,20 @@ resource "aws_s3_bucket_public_access_block" "terraform_state" {
   restrict_public_buckets = true
 }
 
-# EC2 instance resource
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+}
+
 resource "aws_instance" "app_server" {
-  ami           = "ami-0de716d6197524dd9"
-  instance_type = "t3.micro"
-  
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "t3.micro" 
+
   tags = {
     Name = "Calculadora-Instance"
   }
