@@ -2,7 +2,7 @@ provider "aws" {}
 
 # S3 bucket for Terraform state
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "calculadora-terraform-state-isabellemarie"  # ensure unique name
+  bucket = "calculadora-terraform-state-isabellemariebarinov"
 }
 
 # Enable versioning
@@ -36,7 +36,7 @@ resource "aws_s3_bucket_public_access_block" "terraform_state" {
 # EC2 instance resource
 resource "aws_instance" "app_server" {
   ami           = "ami-0de716d6197524dd9"
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
   
   tags = {
     Name = "Calculadora-Instance"
