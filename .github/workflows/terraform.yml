@@ -9,19 +9,10 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./terraform
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Verify terraform directory
-        run: |
-          ls -la
-          pwd
-          test -d terraform || echo "terraform directory not found"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -30,21 +21,24 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Create S3 Bucket if not exists
+        run: |
+          if ! aws s3api head-bucket --bucket calculadora-terraform-state 2>/dev/null; then
+            echo "Creating new S3 bucket..."
+            aws s3api create-bucket \
+              --bucket calculadora-terraform-state \
+              --region ${{ secrets.AWS_REGION }} \
+              --create-bucket-configuration LocationConstraint=${{ secrets.AWS_REGION }}
+            
+            aws s3api put-bucket-versioning \
+              --bucket calculadora-terraform-state \
+              --versioning-configuration Status=Enabled
+          else
+            echo "S3 bucket already exists, continuing..."
+          fi
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.7.0
-    
-      - name: Create S3 Bucket
-        run: |
-          aws s3api create-bucket \
-            --bucket calculadora-terraform-state-2025 \
-            --region ${{ secrets.AWS_REGION }} || true
-          
-          aws s3api put-bucket-versioning \
-            --bucket calculadora-terraform-state-2025 \
-            --versioning-configuration Status=Enabled
-
 
       - name: Initialize Terraform
         working-directory: terraform
