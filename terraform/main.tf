@@ -35,7 +35,7 @@ resource "aws_s3_bucket_public_access_block" "terraform_state" {
 
 # EC2 instance resource
 resource "aws_instance" "app_server" {
-  ami           = "ami-0c55b159cbfafe1f0"
+  ami           = "ami-0de716d6197524dd9"
   instance_type = "t2.micro"
   
   tags = {
