@@ -1,6 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "seu-bucket-para-estado"
+    bucket = "calculadora-terraform-state"
     key    = "terraform.tfstate"
+    encrypt = true
   }
 }
