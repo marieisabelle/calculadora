@@ -28,7 +28,6 @@ jobs:
             aws s3api create-bucket \
               --bucket calculadora-terraform-state \
               --region ${{ secrets.AWS_REGION }} \
-              --create-bucket-configuration LocationConstraint=${{ secrets.AWS_REGION }}
             
             aws s3api put-bucket-versioning \
               --bucket calculadora-terraform-state \
