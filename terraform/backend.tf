@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "terraform-calculadora-pracasecazaporizhzhyariodejaneirotroisrevieres"
+    bucket = "calculadora-terraform-zaporizhzhyariodejaneiro"
     key    = "terraform.tfstate"
-    encrypt = true
+    encrypt = truee 
   }
 }
