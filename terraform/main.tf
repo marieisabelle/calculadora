@@ -2,7 +2,7 @@ provider "aws" {}
 
 # S3 bucket for Terraform state
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "calculadora-terraform-state-2025"  # ensure unique name
+  bucket = "calculadora-terraform-state-isabellemarie"  # ensure unique name
 }
 
 # Enable versioning

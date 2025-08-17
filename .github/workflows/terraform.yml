@@ -23,14 +23,14 @@ jobs:
 
       - name: Create S3 Bucket if not exists
         run: |
-          if ! aws s3api head-bucket --bucket calculadora-terraform-state 2>/dev/null; then
+          if ! aws s3api head-bucket --bucket calculadora-terraform-state-isabellemarie 2>/dev/null; then
             echo "Creating new S3 bucket..."
             aws s3api create-bucket \
-              --bucket calculadora-terraform-state \
+              --bucket calculadora-terraform-state-isabellemarie \
               --region ${{ secrets.AWS_REGION }} \
             
             aws s3api put-bucket-versioning \
-              --bucket calculadora-terraform-state \
+              --bucket calculadora-terraform-state-isabellemarie \
               --versioning-configuration Status=Enabled
           else
             echo "S3 bucket already exists, continuing..."
