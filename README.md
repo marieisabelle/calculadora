@@ -22,4 +22,4 @@ O objetivo é demonstrar um fluxo **DevOps completo** de provisionamento, contei
     4.S3 armazena o state remoto
     5.EC2 provisionada
     6.Deploy do Docker
-    7.Aplicação no a
+    7.Aplicação no ar
