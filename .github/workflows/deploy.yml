@@ -60,6 +60,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
+            cd ~/calculadora
             bash ~/deploy.sh
 
       - name: Stop EC2 Instance
