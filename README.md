@@ -3,6 +3,8 @@
 Este projeto implementa uma aplicação conteinerizada e realiza o deploy automatizado na AWS utilizando **Terraform**, **Docker** e **GitHub Actions**.  
 O objetivo é demonstrar um fluxo **DevOps completo** de provisionamento, conteinerização e automação de deploy.
 
+---
+
 ## Descrição do Projeto
 
 Uma aplicação minimalista de **calculadora** que realiza as operações:
